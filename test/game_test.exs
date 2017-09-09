@@ -49,6 +49,19 @@ defmodule TicTacToe.GameTest do
     end
   end
 
+  test "it prevents you from taking a taken spot" do
+    with {:ok, game} <- Game.new,
+         {:ok, game} <- Game.play_move(game, 1),
+         {:error, :spot_taken, game} <- Game.play_move(game, 1)
+    do
+      assert game.board.positions == ["X","","", "","","", "","",""]
+      assert game.current_player == "O"
+    else
+      {:ok, _game} ->
+        assert false, "Should have failed to update"
+    end
+  end
+
   test "it knows when a game is still not won" do
     {:ok, game} = Game.new
     refute Game.won?(game)
@@ -157,5 +170,13 @@ defmodule TicTacToe.GameTest do
     {:ok, game} = Game.new("X", board)
     assert Game.winner(game) == :no_winner
   end
-  # locked Game
+
+  test "it knows when a game is locked" do
+    combo = [ "X", "X", "O", "O",  "O",  "X", "X",  "O",  ""]
+    {:ok, board} = Board.new(combo)
+    {:ok, game} = Game.new("O", board)
+    refute Game.locked?(game)
+    {:ok, game} = Game.play_move(game, 9)
+    assert Game.locked?(game)
+  end
 end
