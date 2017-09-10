@@ -59,91 +59,6 @@ defmodule TicTacToe.Board do
   defstruct [:positions]
   alias TicTacToe.Board
   @empty_position ""
-  @x_winning_combinations [
-     [
-       "X", "X", "X",
-       "",  "",  "",
-       "",  "",  "",
-      ],
-     [
-       "",  "",  "",
-       "X", "X", "X",
-       "",  "",  "",
-      ],
-     [
-       "",  "",  "",
-       "",  "",  "",
-       "X", "X", "X",
-      ],
-     [
-       "X", "", "",
-       "X", "", "",
-       "X", "", "",
-      ],
-     [
-       "", "X", "",
-       "", "X", "",
-       "", "X", "",
-      ],
-     [
-       "", "", "X",
-       "", "", "X",
-       "", "", "X",
-      ],
-     [
-       "X", "", "",
-       "",  "X","",
-       "",  "", "X",
-      ],
-     [
-       "", "", "X",
-       "", "X", "",
-       "X","", "",
-      ]
-     ]
-
-    @o_winning_combinations [
-     [
-       "O", "O", "O",
-       "",  "",  "",
-       "",  "",  "",
-      ],
-     [
-       "",  "",  "",
-       "O", "O", "O",
-       "",  "",  "",
-      ],
-     [
-       "",  "",  "",
-       "",  "",  "",
-       "O", "O", "O",
-      ],
-     [
-       "O", "", "",
-       "O", "", "",
-       "O", "", "",
-      ],
-     [
-       "", "O", "",
-       "", "O", "",
-       "", "O", "",
-      ],
-     [
-       "", "", "O",
-       "", "", "O",
-       "", "", "O",
-      ],
-     [
-       "O", "", "",
-       "",  "O","",
-       "",  "", "O",
-      ],
-     [
-       "", "", "O",
-       "", "O", "",
-       "O","", "",
-      ],
-  ]
   def new do
     {:ok, %Board{
       positions: [
@@ -169,16 +84,203 @@ defmodule TicTacToe.Board do
       _ ->
         {:error, :spot_taken, board}
       end
-     
   end
 
-  def won?(%{positions: positions }) when positions in @x_winning_combinations  or positions in @o_winning_combinations do
-    true
-  end
+
+  def won?(%{positions:
+        [
+          "O", "O", "O",
+          _,  _,  _,
+          _,  _,  _,
+         ]}), do: true
+  def won?(%{positions:
+        [
+          _,  _,  _,
+          "O", "O", "O",
+          _,  _,  _,
+         ]}), do: true
+  def won?(%{positions:
+        [
+          _,  _,  _,
+          _,  _,  _,
+          "O", "O", "O",
+         ]}), do: true
+  def won?(%{positions:
+        [
+          "O", _, _,
+          "O", _, _,
+          "O", _, _,
+         ]}), do: true
+  def won?(%{positions:
+        [
+          _, "O", _,
+          _, "O", _,
+          _, "O", _,
+         ]}), do: true
+  def won?(%{positions:
+        [
+          _, _, "O",
+          _, _, "O",
+          _, _, "O",
+         ]}), do: true
+  def won?(%{positions:
+        [
+          "O", _, _,
+          _,  "O",_,
+          _,  _, "O",
+         ]}), do: true
+  def won?(%{positions:
+        [
+          _, _, "O",
+          _, "O", _,
+          "O",_, _,
+         ]}), do: true
+  def won?(%{positions:
+        [
+          "X", "X", "X",
+          _,  _,  _,
+          _,  _,  _,
+         ]}), do: true
+  def won?(%{positions:
+        [
+          _,  _,  _,
+          "X", "X", "X",
+          _,  _,  _,
+         ]}), do: true
+  def won?(%{positions:
+        [
+          _,  _,  _,
+          _,  _,  _,
+          "X", "X", "X",
+         ]}), do: true
+  def won?(%{positions:
+        [
+          "X", _, _,
+          "X", _, _,
+          "X", _, _,
+         ]}), do: true
+  def won?(%{positions:
+        [
+          _, "X", _,
+          _, "X", _,
+          _, "X", _,
+         ]}), do: true
+  def won?(%{positions:
+        [
+          _, _, "X",
+          _, _, "X",
+          _, _, "X",
+         ]}), do: true
+  def won?(%{positions:
+        [
+          "X", _, _,
+          _,  "X",_,
+          _,  _, "X",
+         ]}), do: true
+  def won?(%{positions:
+        [
+          _, _, "X",
+          _, "X", _,
+          "X",_, _,
+         ]}), do: true
   def won?(_), do: false
+  def winner(%{positions:
+        [
+          "O", "O", "O",
+          _,  _,  _,
+          _,  _,  _,
+         ]}), do: "O"
+  def winner(%{positions:
+        [
+          _,  _,  _,
+          "O", "O", "O",
+          _,  _,  _,
+         ]}), do: "O"
+  def winner(%{positions:
+        [
+          _,  _,  _,
+          _,  _,  _,
+          "O", "O", "O",
+         ]}), do: "O"
+  def winner(%{positions:
+        [
+          "O", _, _,
+          "O", _, _,
+          "O", _, _,
+         ]}), do: "O"
+  def winner(%{positions:
+        [
+          _, "O", _,
+          _, "O", _,
+          _, "O", _,
+         ]}), do: "O"
+  def winner(%{positions:
+        [
+          _, _, "O",
+          _, _, "O",
+          _, _, "O",
+         ]}), do: "O"
+  def winner(%{positions:
+        [
+          "O", _, _,
+          _,  "O",_,
+          _,  _, "O",
+         ]}), do: "O"
+  def winner(%{positions:
+        [
+          _, _, "O",
+          _, "O", _,
+          "O",_, _,
+         ]}), do: "O"
 
-  def winner(%{positions: positions}) when positions in @x_winning_combinations, do: "X"
-  def winner(%{positions: positions}) when positions in @o_winning_combinations, do: "O"
+  def winner(%{positions:
+        [
+          "X", "X", "X",
+          _,  _,  _,
+          _,  _,  _,
+         ]}), do: "X"
+  def winner(%{positions:
+        [
+          _,  _,  _,
+          "X", "X", "X",
+          _,  _,  _,
+         ]}), do: "X"
+  def winner(%{positions:
+        [
+          _,  _,  _,
+          _,  _,  _,
+          "X", "X", "X",
+         ]}), do: "X"
+  def winner(%{positions:
+        [
+          "X", _, _,
+          "X", _, _,
+          "X", _, _,
+         ]}), do: "X"
+  def winner(%{positions:
+        [
+          _, "X", _,
+          _, "X", _,
+          _, "X", _,
+         ]}), do: "X"
+  def winner(%{positions:
+        [
+          _, _, "X",
+          _, _, "X",
+          _, _, "X",
+         ]}), do: "X"
+  def winner(%{positions:
+        [
+          "X", _, _,
+          _,  "X",_,
+          _,  _, "X",
+         ]}), do: "X"
+  def winner(%{positions:
+        [
+          _, _, "X",
+          _, "X", _,
+          "X",_, _,
+         ]}), do: "X"
   def winner(_), do: :no_winner
 
   def full?(%{positions: positions}) do

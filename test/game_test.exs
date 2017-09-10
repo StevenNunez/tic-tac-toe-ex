@@ -157,18 +157,18 @@ defmodule TicTacToe.GameTest do
     end)
   end
 
-  test "it knows who won the game" do
-    winning_combo = [ "X", "X", "X", "",  "",  "", "",  "",  ""]
-    {:ok, board} = Board.new(winning_combo)
-    {:ok, won_game} = Game.new("X", board)
-    assert Game.winner(won_game) == "X"
-  end
-
   test "it knows if there's not a winnner" do
     combo = [ "X", "X", "O", "",  "",  "", "",  "",  ""]
     {:ok, board} = Board.new(combo)
     {:ok, game} = Game.new("X", board)
     assert Game.winner(game) == :no_winner
+  end
+
+  test "it knows if there is a winnner" do
+    combo = [ "X", "X", "X", "0",  "0",  "", "",  "",  ""]
+    {:ok, board} = Board.new(combo)
+    {:ok, game} = Game.new("X", board)
+    assert Game.winner(game) == "X"
   end
 
   test "it knows when a game is locked" do
