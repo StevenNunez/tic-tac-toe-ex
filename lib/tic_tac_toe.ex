@@ -17,16 +17,17 @@ defmodule TicTacToe do
     with {position, _} <- Integer.parse(choice),
          {:ok, game}   <- Game.play_move(game, position)
     do
-      if Game.locked?(game) do
+      if Game.over?(game) do
         CLIPresenter.display(game)
-        IO.puts "Game over. No more moves possible"
-      else
-        if Game.won?(game) do
-          winner = Game.winner(game)
-          IO.puts "#{winner} won!"
-        else
-          play(game)
+        cond do
+          Game.won?(game) ->
+            winner = Game.winner(game)
+            IO.puts "#{winner} won!"
+          Game.locked?(game) ->
+            IO.puts "Game over. No more moves possible"
         end
+      else
+        play(game)
       end
     else
       {:error, :spot_taken, _game} ->

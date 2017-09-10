@@ -27,6 +27,9 @@ defmodule TicTacToe.Game do
   end
   def play_move(game, _), do: {:error, game}
 
+  def over?(game) do
+    won?(game) || locked?(game)
+  end
   def won?(game) do
     Board.won?(game.board)
   end
